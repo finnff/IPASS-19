@@ -1,6 +1,6 @@
 # IPASS 2019
 
-### Pong Game with MPU-6050 tilt controlls :100: :cat_smirk:
+### Pong Game with MPU-6050 tilt controlls :100: :smirk_cat:
 
 
 
