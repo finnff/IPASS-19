@@ -1,6 +1,11 @@
 Makefile
 Makefile.*
 
+*.elf
+*.bin
+*.ld
+*.map
+bmptk*
 
 
 # Created by https://www.gitignore.io/api/c++,visualstudiocode
