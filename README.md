@@ -2,7 +2,6 @@
 
 ### Pong Game with MPU-6050 tilt controlls 
 
-![alt text](https://i.imgur.com/VRAqi4P.jpg "image")
 
 ### Required Items
 * 2 GY-521(MPU-6050 Breakout Boards)
@@ -15,3 +14,4 @@
 * finnff's MPU6050 library(included in /lib/)[ mpu6050simple](https://github.com/finnff/mpu6050simple)
 
 
+![alt text](https://i.imgur.com/rmAUbIa.jpg "image")
