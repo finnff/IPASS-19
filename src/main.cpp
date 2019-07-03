@@ -5,26 +5,29 @@ int main(int argc, char **argv) {
 
   namespace target = hwlib::target;
 
+  // Intialize OLED display
   auto scl = target::pin_oc(target::pins::d10);
   auto sda = target::pin_oc(target::pins::d11);
   auto i2c_bus = hwlib::i2c_bus_bit_banged_scl_sda(scl, sda);
   auto w = hwlib::glcd_oled(i2c_bus, 0x3c);
 
+  // Intialize i2c bus for use with 2x gy-521 Breakout boards
   auto scl1 = target::pin_oc(target::pins::d21);
   auto sda1 = target::pin_oc(target::pins::d20);
   auto iic = hwlib::i2c_bus_bit_banged_scl_sda(scl1, sda1);
-  auto chipL = mpu6050(iic, 0x68);
-  auto chipR = mpu6050(iic, 0x69);
+  auto chipL = mpu6050(iic, 0x68); // AD0 LOW
+  auto chipR = mpu6050(iic, 0x69); // AD0 HI
 
   chipL.init();
   chipR.init();
-  int rwidth = 128;
+  int rwidth =
+      128; // Set screen width resolution , OLED is 128*64, used for scaling
   int rheight = 64;
 
-  int Lscore = 0;
+  int Lscore = 0; // init score
   int Rscore = 0;
 
-  RandomBall b(w, 128, 64);
+  RandomBall b(w, 128, 64); // Construct random ball object
 
   bat r(w, hwlib::xy((rwidth - (rwidth / 10)) - 2, rheight / 2),
         hwlib::xy((rwidth - (rwidth / 10)), ((rheight / 2) + (rheight / 5))));
@@ -33,7 +36,8 @@ int main(int argc, char **argv) {
         hwlib::xy((rwidth / 10 + 2), ((rheight / 2) + (rheight / 5))));
 
   for (;;) {
-    int lroll = chipL.readRollAngle();
+    int lroll = chipL.readRollAngle(); // read roll angle of MPU6050, this is
+                                       // the input of the game.
     int rroll = chipR.readRollAngle();
 
     w.clear();
@@ -57,9 +61,8 @@ int main(int argc, char **argv) {
       if (b.start.y <= r.end.y && b.start.y >= r.start.y) {
         b.change_speed_factor(-1, 1);
       } else {
-        Lscore++;
-        hwlib::cout << Lscore << " - " << Rscore
-                    << hwlib::endl; // Lose condition
+        Lscore++; // Lose condition
+        hwlib::cout << Lscore << " - " << Rscore << hwlib::endl;
         hwlib::wait_ms(500);
         b.reset();
       }
@@ -70,9 +73,8 @@ int main(int argc, char **argv) {
         b.change_speed_factor(-1, 1);
 
       } else {
-        Rscore++;
-        hwlib::cout << Lscore << " - " << Rscore
-                    << hwlib::endl; // Lose condition
+        Rscore++; // Lose condition
+        hwlib::cout << Lscore << " - " << Rscore << hwlib::endl;
         hwlib::wait_ms(500);
         b.reset();
       }

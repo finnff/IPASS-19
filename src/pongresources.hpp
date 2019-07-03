@@ -4,6 +4,8 @@
 #include "TrueRandom.hpp"
 #include "hwlib.hpp"
 
+// funtion that will generate either -2 or 2, this is used to
+// determine the inital direction of the ball
 int SpeedGen() {
   int rngseed = RandomRange(1, 100);
   int tempspeed = 0;
@@ -14,6 +16,9 @@ int SpeedGen() {
   }
   return tempspeed;
 }
+
+// Generic object class that includes coordinates, and a draw()function, and a
+// print function for debugging
 
 class object {
 private:
@@ -39,6 +44,8 @@ public:
   }
 };
 
+// ball class that generates a 2x2 object with a move function,  and a function
+// that allows it to "Bounce" later on.
 class ball : public object {
 
 public:
@@ -60,6 +67,9 @@ public:
   }
 };
 
+// Ball but with random spawn betweem the middle 25% of the window, both height
+// and width wise. Also uses earlier function to generate a random starting
+// direction
 class RandomBall : public ball {
   int width;
   int height;
@@ -71,7 +81,7 @@ public:
                        RandomRange(3 * height / 8, 5 * height / 8)),
              SpeedGen(), SpeedGen()),
         width(width), height(height) {}
-  void reset() {
+  void reset() { // Resets the object, using different random vales to start with.
     start = hwlib::xy(RandomRange(3 * width / 8, 5 * width / 8),
                       RandomRange(3 * height / 8, 5 * height / 8));
     end = start + hwlib::xy(1, 1);
@@ -80,6 +90,7 @@ public:
   }
 };
 
+// Bat/paddle with move up/down functionality
 class bat : public object {
 private:
 public:
