@@ -1,0 +1,6 @@
+[submodule "lib/mpu6050simple"]
+	path = lib/mpu6050simple
+	url = https://github.com/finnff/mpu6050simple
+[submodule "lib/rng-sam3x"]
+	path = lib/rng-sam3x
+	url = https://github.com/finnff/rng-sam3x
